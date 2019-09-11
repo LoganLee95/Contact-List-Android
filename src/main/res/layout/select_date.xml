@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+  <DatePicker
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:id="@+id/birthdayPicker"
+      android:layout_alignParentTop="true"
+      android:layout_marginTop="5dp"
+      android:layout_centerHorizontal="true" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonLayout"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:gravity="end"
+        style="?android:attr/borderlessButtonStyle" >
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cancelButtonText"
+            android:textColor="@color/dialog_button_color"
+            android:id="@+id/buttonCancel"
+            style="?android:attr/borderlessButtonStyle" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/selectButtonText"
+            android:textColor="@color/dialog_button_color"
+            android:id="@+id/buttonSelect"
+            style="?android:attr/borderlessButtonStyle" />
+
+
+    </LinearLayout>
+
+
+</RelativeLayout>
