@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">MyContactList</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="saveButtonText">Save</string>
+    <string name="cancelButtonText">Cancel</string>
+    <string name="contactLabelText">Contact</string>
+    <string name="addressLabelText">Address:</string>
+    <string name="birthdayLabelText">Birthday:</string>
+    <string name="changeLabelText">Change</string>
+    <string name="cellphoneLabelText">Cellphone:</string>
+    <string name="home_phoneLabelText">Home Phone:</string>
+    <string name="selectButtonText">Select</string>
 </resources>
