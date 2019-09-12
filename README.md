@@ -8,7 +8,7 @@ Including:
 
 # The Android lifecycle,
 # XML GUI layout,
-# Data persistane in mobile applications,
+# Data persistane for mobile applications,
 # SQLite design and implementation
 
 
