@@ -3,7 +3,10 @@ This the Android workshop project from: Mobile App Development for IOS and Andro
 
 This application build covers the main central functions and concepts of an Andriod app.
 Including: 
-The Android lifecycle,
-XML GUI layout,
-Data persistance with SQLite, 
+
+# The Android lifecycle,
+# XML GUI layout,
+# Data persistane in mobile applications,
+# SQLite design and implementation
+
 
