@@ -16,7 +16,7 @@
         android:id="@+id/buttonLayout"
         android:orientation="horizontal"
         android:layout_alignParentBottom="true"
-        android:gravity="end"
+        android:gravity="center"
         style="?android:attr/borderlessButtonStyle" >
 
         <Button

@@ -10,4 +10,11 @@
     <string name="cellphoneLabelText">Cellphone:</string>
     <string name="home_phoneLabelText">Home Phone:</string>
     <string name="selectButtonText">Select</string>
+    <string name="sort_contact_by">Sort Contacts By:</string>
+    <string name="name_settings">Name</string>
+    <string name="city_settings">City</string>
+    <string name="birthday_settings">Birthday</string>
+    <string name="sort_order_settings">Sort Order:</string>
+    <string name="ascending">Ascending</string>
+    <string name="descending">Descending</string>
 </resources>
