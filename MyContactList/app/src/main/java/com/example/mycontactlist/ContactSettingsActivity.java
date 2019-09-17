@@ -11,7 +11,6 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.ScrollView;
 
-import static com.example.mycontactlist.R.id.scrollView;
 
 public class ContactSettingsActivity extends AppCompatActivity {
 
@@ -159,7 +158,7 @@ public class ContactSettingsActivity extends AppCompatActivity {
             rbGreen.setChecked(true);
             scrollViewObject.setBackgroundResource(R.color.settings_background_2);
         }
-        /* Exercise 1. */
+
 
     }
     private void initListButton() {

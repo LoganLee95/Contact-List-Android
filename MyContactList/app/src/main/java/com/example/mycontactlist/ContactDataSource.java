@@ -22,6 +22,7 @@ public class ContactDataSource {
     public void close(){
         dbHelper.close();
     }
+
     public boolean insertContact(Contact contact) {
         boolean didSucceed = false;
         try {
@@ -68,9 +69,6 @@ public class ContactDataSource {
         }catch (Exception ex){
 
         }
-
-
-
         return didSucceed;
     }
     public int getLastContactId(){
@@ -87,6 +85,32 @@ public class ContactDataSource {
             lastId = -1;
         }
         return lastId;
+    }
+    /*
+    Exercise 2
+     */
+    public boolean updateAddress(ContactAddress contactAddress){
+
+        boolean didSucceed = false;
+
+        Long rowId = (long)contactAddress.getContactID();
+        ContentValues updateValues = new ContentValues();
+
+        try{
+
+            updateValues.put("streetaddress",contactAddress.getStreetAddress());
+            updateValues.put("city",contactAddress.getCity());
+            updateValues.put("state",contactAddress.getState());
+            updateValues.put("zipcode",contactAddress.getZipCode());
+
+            didSucceed = database.update("contact", updateValues, "_id=" + rowId, null) > 0;
+
+
+        }catch(Exception e3){
+            e3.printStackTrace();
+        }
+
+    return didSucceed;
     }
 
 
