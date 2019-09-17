@@ -9,4 +9,5 @@
     <color name="contact_background">#E1BEE7 </color>
     <color name="settings_background_1">#FFFF00 </color>
     <color name="settings_background_2">#76FF03 </color>
+    <color name="standard_background">#EEEEEE</color>
 </resources>
