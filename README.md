@@ -3,12 +3,12 @@ Built by Harry Dulaney following the workshop build in "Mobile App Development f
 
 This the Android workshop project from: Mobile App Development for IOS and Android by Jakob Iversen &amp; Michael Eierman
 
-This application build covers the main central functions and concepts of an Andriod app.
+This application build covers the main concepts critical to Andriod development.
 Including: 
 
 # Android lifecycle,
-# XML GUI layout,
-# Data persistane for mobile applications,
+# XML,
+# Data persistance in mobile applications,
 # SQLite design and implementation
 
 
