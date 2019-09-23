@@ -3,6 +3,9 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+    <color name="system_red">#ff0000</color>
+    <color name="system_transparent">#00000000</color>
+    <color name="system_blue">#0000ff</color>
     <color name="navbar_background">#000000</color>
     <color name="toolbar_background">#bebebe</color>
     <color name="dialog_button_color">#26C6DA</color>
@@ -10,4 +13,5 @@
     <color name="settings_background_1">#FFFF00 </color>
     <color name="settings_background_2">#76FF03 </color>
     <color name="standard_background">#EEEEEE</color>
+    <color name="settings_background_3">#2196F3</color>
 </resources>

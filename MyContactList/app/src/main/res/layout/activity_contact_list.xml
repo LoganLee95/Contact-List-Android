@@ -7,6 +7,8 @@
     android:id="@+id/activity_contact"
     tools:context=".ContactListActivity">
 
+
+
     <RelativeLayout
         android:id="@+id/navbar"
         android:layout_width="match_parent"
@@ -46,5 +48,51 @@
             android:layout_toRightOf="@+id/imageButtonMap"
             app:srcCompat="@drawable/settingicon" />
     </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/toolbar_background"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <Button
+            android:text="Delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:id="@+id/buttonDelete" />
+
+        <Button
+            android:text="Add Contact"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/buttonAdd"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="20dp"
+            android:layout_marginEnd="20dp" />
+
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/lvContacts"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/navbar"
+        android:layout_below="@+id/toolbar"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true" />
+
+
+
+
 
 </RelativeLayout>

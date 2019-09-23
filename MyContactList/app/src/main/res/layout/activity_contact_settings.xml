@@ -191,6 +191,14 @@
                 android:text="Neon Green"
                 android:layout_weight="1"/>
 
+            <RadioButton
+                android:id="@+id/radioBlue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Very Blue"
+                android:layout_weight="1"/>
+
+
         </RadioGroup>
 
     </RelativeLayout>

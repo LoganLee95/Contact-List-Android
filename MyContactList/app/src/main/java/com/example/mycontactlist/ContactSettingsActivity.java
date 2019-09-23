@@ -89,6 +89,8 @@ public class ContactSettingsActivity extends AppCompatActivity {
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
                 RadioButton rbNormal = (RadioButton)findViewById(R.id.radioNormal);
                 RadioButton rbYellow = (RadioButton)findViewById(R.id.radioYellow);
+                RadioButton rbBlue = (RadioButton)findViewById(R.id.radioBlue);
+
 
                 if(rbNormal.isChecked()){
                     getSharedPreferences("MyContactListPreferences",
@@ -100,7 +102,16 @@ public class ContactSettingsActivity extends AppCompatActivity {
                             Context.MODE_PRIVATE).edit()
                             .putString("colorchoice","yellow").commit();
                     scrollViewObject.setBackgroundResource(R.color.settings_background_1);
-                }else {
+
+                }
+                else if(rbBlue.isChecked()){
+                    getSharedPreferences("MyContactListPreferences",
+                            Context.MODE_PRIVATE).edit()
+                            .putString("colorchoice","blue").commit();
+                    scrollViewObject.setBackgroundResource(R.color.settings_background_3);
+
+                }
+                else {
                     getSharedPreferences("MyContactListPreferences",
                             Context.MODE_PRIVATE).edit()
                             .putString("colorchoice","green").commit();
@@ -146,6 +157,8 @@ public class ContactSettingsActivity extends AppCompatActivity {
         RadioButton rbNormal = (RadioButton)findViewById(R.id.radioNormal);
         RadioButton rbYellow = (RadioButton)findViewById(R.id.radioYellow);
         RadioButton rbGreen = (RadioButton)findViewById(R.id.radioGreen);
+        RadioButton rbBlue = (RadioButton)findViewById(R.id.radioBlue);
+
 
         if(colorChooser.equalsIgnoreCase("standard")){
             rbNormal.setChecked(true);
@@ -154,12 +167,15 @@ public class ContactSettingsActivity extends AppCompatActivity {
         }else if(colorChooser.equalsIgnoreCase("yellow")){
             rbYellow.setChecked(true);
             scrollViewObject.setBackgroundResource(R.color.settings_background_1);
+
+        }else if(colorChooser.equalsIgnoreCase("green")){
+        rbGreen.setChecked(true);
+        scrollViewObject.setBackgroundResource(R.color.settings_background_2);
+
         }else{
-            rbGreen.setChecked(true);
-            scrollViewObject.setBackgroundResource(R.color.settings_background_2);
+            rbBlue.setChecked(true);
+            scrollViewObject.setBackgroundResource(R.color.settings_background_3);
         }
-
-
     }
     private void initListButton() {
 

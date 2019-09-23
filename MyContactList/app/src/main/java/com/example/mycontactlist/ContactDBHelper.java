@@ -13,10 +13,11 @@ public class ContactDBHelper extends SQLiteOpenHelper {
 
     private static final String CREATE_TABLE_CONTACT =
             "create table contact (_id integer primary key autoincrement, "
-            + "contactname text not null, streetaddress text, "
-            + "city text, state text, zipcode text, "
-            + "phonenumber text, cellnumber text, "
-            + "email text, birthday text);";
+                    + "contactname text not null, streetaddress text, "
+                    + "city text, state text, zipcode text, "
+                    + "phonenumber text, cellnumber text, "
+                    + "email text, birthday text);";
+
 
     public ContactDBHelper(Context context) {
         super(context,DATABASE_NAME,null,DATABASE_VERSION);
@@ -32,11 +33,17 @@ public class ContactDBHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         Log.w(ContactDBHelper.class.getName(),
-                "Upgrading database from version " +  oldVersion
-                + " to " + newVersion  + " , which will destroy all old data");
-
-        db.execSQL("DROP TABLE IF EXISTS contact");
+                "Upgrading database from version " + oldVersion + " to "
+                        + newVersion + ", which will destroy all old data");
+        db.execSQL("ALTER TABLE contact ADD COLUMN BestFriendForever DEFAULT 0");
         onCreate(db);
+
+        /*
+        Exercise 3
+        db.execSQL("DROP TABLE IF EXISTS contact");
+
+         */
+
     }
 
 }

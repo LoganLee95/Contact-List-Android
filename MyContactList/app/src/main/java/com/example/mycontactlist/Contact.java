@@ -13,10 +13,12 @@ public class Contact {
     private String cellNumber;
     private String eMail;
     private Calendar birthday;
+    private boolean bestFriend;
 
     public Contact() {
         contactID = -1;
         birthday = Calendar.getInstance();
+        bestFriend = false;
     }
 
     public int getContactID() {
@@ -79,4 +81,12 @@ public class Contact {
     public String getEMail() {
         return eMail;
     }
+    public boolean isBestFriend() {
+        return bestFriend;
+    }
+
+    public void setBestFriend(boolean bestFriend) {
+        this.bestFriend = bestFriend;
+    }
+
 }
