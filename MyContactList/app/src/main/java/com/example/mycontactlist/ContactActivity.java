@@ -14,9 +14,11 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ScrollView;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -38,6 +40,7 @@ public class ContactActivity extends AppCompatActivity implements SaveDateListen
         initSettingsButton();
         initToggleButton();
 
+
         Bundle extras = getIntent().getExtras();
 
         if(extras != null){
@@ -47,6 +50,7 @@ public class ContactActivity extends AppCompatActivity implements SaveDateListen
             currentContact = new Contact();
         }
 
+        initBestFriendSwitch();
         setForEditing(false);
         initChangeDateButton();
         initTextChangedEvents();
@@ -122,6 +126,7 @@ public class ContactActivity extends AppCompatActivity implements SaveDateListen
         EditText editEmail = (EditText) findViewById(R.id.editEMail);
         Button buttonChange = (Button) findViewById(R.id.btnBirthday);
         Button buttonSave = (Button) findViewById(R.id.buttonSave);
+        Switch friendSwitch = findViewById (R.id.friendSwitch);
 
         editName.setEnabled(enabled);
         editAddress.setEnabled(enabled);
@@ -133,6 +138,7 @@ public class ContactActivity extends AppCompatActivity implements SaveDateListen
         editEmail.setEnabled(enabled);
         buttonChange.setEnabled(enabled);
         buttonSave.setEnabled(enabled);
+        friendSwitch.setEnabled(enabled);
 
         if (enabled) {
             editName.requestFocus();
@@ -323,6 +329,23 @@ public class ContactActivity extends AppCompatActivity implements SaveDateListen
         etHomePhone.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
         etCellPhone.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
     }
+    private void initBestFriendSwitch(){
+        Switch friendSwitch = (Switch) findViewById(R.id.friendSwitch);
+
+
+
+        friendSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                if(currentContact.isBestFriend() == 0){
+                    currentContact.setAsBestFriend(1);
+                }else
+                currentContact.setAsBestFriend(0);
+            }
+        });
+
+    }
     private void initContact(int id){
         ContactDataSource ds = new ContactDataSource(ContactActivity.this);
         try{
@@ -343,6 +366,7 @@ public class ContactActivity extends AppCompatActivity implements SaveDateListen
         EditText editCell = (EditText) findViewById(R.id.editCell);
         EditText editEmail = (EditText) findViewById(R.id.editEMail);
         TextView birthDay = (TextView) findViewById(R.id.textBirthday);
+        Switch friendSwitch = (Switch)findViewById(R.id.friendSwitch);
 
 
         editName.setText(currentContact.getContactName());
@@ -355,6 +379,9 @@ public class ContactActivity extends AppCompatActivity implements SaveDateListen
         editEmail.setText(currentContact.getEMail());
         birthDay.setText(DateFormat.format("MM/dd/yyyy",
                 currentContact.getBirthday().getTimeInMillis()).toString());
+
+        //If the loaded contact is a a bff switch is set to on
+        friendSwitch.setChecked(currentContact.isBestFriend() == 1);
     }
     private void initSaveButton(){
         Button saveButton = (Button)findViewById(R.id.buttonSave);

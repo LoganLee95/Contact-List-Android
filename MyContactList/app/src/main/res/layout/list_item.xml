@@ -16,25 +16,65 @@
         android:textColor="@color/system_blue"
         android:text="Contact Name"
         android:textSize="@dimen/text_size_large"/>
+    <TextView
+        android:id="@+id/streetAddress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="17dp"
+        android:layout_marginLeft="17dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textContactName"
+        android:text="StreetAddress" />
+
+    <TextView
+        android:id="@+id/city"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/streetAddress"
+        android:layout_marginStart="17dp"
+        android:layout_marginLeft="17dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:text="City" />
+
+    <TextView
+        android:id="@+id/state"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_below="@+id/streetAddress"
+        android:layout_toRightOf="@+id/city"
+        android:text="State" />
+
+    <TextView
+        android:id="@+id/zip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/streetAddress"
+        android:layout_marginLeft="5dp"
+        android:layout_toRightOf="@id/state"
+        android:text="ZipCode" />
+
 
     <TextView
         android:id="@+id/textHome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginLeft="15dp"
+        android:layout_marginStart="17dp"
+        android:layout_marginLeft="17dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/textContactName"
+        android:layout_below="@+id/city"
         android:text="Home:" />
 
     <TextView
         android:id="@+id/textPhoneNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textContactName"
         android:layout_marginLeft="5dp"
         android:layout_toRightOf="@id/textHome"
+        android:layout_below="@+id/city"
         android:text="Phone Number" />
 
 
@@ -42,16 +82,16 @@
         android:id="@+id/textCell"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
+        android:layout_marginLeft="10dp"
         android:layout_toRightOf="@+id/textPhoneNumber"
-        android:layout_below="@+id/textContactName"
+        android:layout_below="@id/zip"
         android:text="Cell:" />
     <TextView
         android:id="@+id/textCellNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/textCell"
-        android:layout_below="@+id/textContactName"
+        android:layout_below="@+id/zip"
         android:layout_marginLeft="5dp"
         android:text="Cell Number" />
 
@@ -76,14 +116,16 @@
         android:text="DELETE" />
 
     <ImageView
-        android:id="@+id/starImage"
+        android:id="@+id/iconStar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="10dp"
         android:layout_alignParentTop="true"
         android:layout_marginTop="10dp"
         android:layout_toRightOf="@+id/textContactName"
-        app:srcCompat="@drawable/baseline_star_border_black_18dp" />
+        android:src="@drawable/ic_action_bff"
+        />
+
 
 
 </RelativeLayout>

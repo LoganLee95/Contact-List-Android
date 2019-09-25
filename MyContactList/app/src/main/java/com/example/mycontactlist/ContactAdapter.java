@@ -9,7 +9,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.util.ArrayList;
 
 public class ContactAdapter extends ArrayAdapter<Contact> {
@@ -34,30 +33,39 @@ public class ContactAdapter extends ArrayAdapter<Contact> {
                         adapterContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 v = vi.inflate(R.layout.list_item, null);
             }
+
             TextView contactName = (TextView) v.findViewById(R.id.textContactName);
-            contactName.setTextColor(parent.getResources().getColor(R.color.system_red));
+
+            if(position % 2 == 0){
+                contactName.setTextColor(parent.getResources().getColor(R.color.system_red));
+
+            }else{
+                contactName.setTextColor(parent.getResources().getColor(R.color.system_blue));
+            }
+
             TextView contactNumber = (TextView) v.findViewById(R.id.textPhoneNumber);
-            TextView cellNumber = (TextView) v.findViewById(R.id.textCellNumber);
-            ImageView bestFriendLabel  = (ImageView)v.findViewById(R.id.starImage);
+            TextView contactCell = (TextView) v.findViewById(R.id.textCellNumber);
+            TextView contactStreet = (TextView)v.findViewById(R.id.streetAddress);
+            TextView contactCity = (TextView)v.findViewById(R.id.city);
+            TextView contactState = (TextView)v.findViewById(R.id.state);
+            TextView contactZipcode = (TextView)v.findViewById(R.id.zip);
+            ImageView bestFriendLabel  = (ImageView)v.findViewById(R.id.iconStar);
+            bestFriendLabel.setVisibility(View.INVISIBLE);
             Button b = (Button) v.findViewById(R.id.buttonDeleteContact);
+
+            String stateText = contact.getState() + ", ";
+
             contactName.setText(contact.getContactName());
             contactNumber.setText(contact.getPhoneNumber());
-            cellNumber.setText(contact.getCellNumber());
+            contactCell.setText(contact.getCellNumber());
             b.setVisibility(View.INVISIBLE);
-
-            if(contact.getCity() != null) {
-                if (contact.getCity().equals("Tucker")) {
-                    contact.setBestFriend(true);
+            contactStreet.setText(contact.getStreetAddress());
+            contactCity.setText(contact.getCity());
+            contactState.setText(stateText);
+            contactZipcode.setText(contact.getZipCode());
+                if (contact.isBestFriend() == 1) {
+                    bestFriendLabel.setVisibility(View.VISIBLE);
                 }
-            }
-
-            if(contact.isBestFriend()){
-                bestFriendLabel.setVisibility(View.VISIBLE);
-            }else {
-                bestFriendLabel.setVisibility(View.INVISIBLE);
-            }
-
-
 
         }catch(Exception e3){
             e3.printStackTrace();
