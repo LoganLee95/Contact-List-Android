@@ -332,8 +332,6 @@ public class ContactActivity extends AppCompatActivity implements SaveDateListen
     private void initBestFriendSwitch(){
         Switch friendSwitch = (Switch) findViewById(R.id.friendSwitch);
 
-
-
         friendSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {

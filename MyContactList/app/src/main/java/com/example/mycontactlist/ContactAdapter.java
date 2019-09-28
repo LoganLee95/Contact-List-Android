@@ -36,6 +36,7 @@ public class ContactAdapter extends ArrayAdapter<Contact> {
 
             TextView contactName = (TextView) v.findViewById(R.id.textContactName);
 
+            //Exercise #4: check the position of the contact instance and set to red if its an even number
             if(position % 2 == 0){
                 contactName.setTextColor(parent.getResources().getColor(R.color.system_red));
 
@@ -49,10 +50,17 @@ public class ContactAdapter extends ArrayAdapter<Contact> {
             TextView contactCity = (TextView)v.findViewById(R.id.city);
             TextView contactState = (TextView)v.findViewById(R.id.state);
             TextView contactZipcode = (TextView)v.findViewById(R.id.zip);
-            ImageView bestFriendLabel  = (ImageView)v.findViewById(R.id.iconStar);
-            bestFriendLabel.setVisibility(View.INVISIBLE);
-            Button b = (Button) v.findViewById(R.id.buttonDeleteContact);
 
+
+            //Create ImageView for the best friend icon
+            ImageView bestFriendLabel  = (ImageView)v.findViewById(R.id.iconStar);
+
+            //Set best friend star icon to invisible
+            bestFriendLabel.setVisibility(View.INVISIBLE);
+
+
+
+            Button b = (Button) v.findViewById(R.id.buttonDeleteContact);
             String stateText = contact.getState() + ", ";
 
             contactName.setText(contact.getContactName());
@@ -63,6 +71,8 @@ public class ContactAdapter extends ArrayAdapter<Contact> {
             contactCity.setText(contact.getCity());
             contactState.setText(stateText);
             contactZipcode.setText(contact.getZipCode());
+
+            //Check if the contact has the best friend value
                 if (contact.isBestFriend() == 1) {
                     bestFriendLabel.setVisibility(View.VISIBLE);
                 }

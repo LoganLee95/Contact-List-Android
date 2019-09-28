@@ -38,6 +38,7 @@ public class ContactDBHelper extends SQLiteOpenHelper {
 
             db.execSQL("DROP TABLE IF EXISTS contact");
 
+            //db.execSQL("ALTER TABLE contact ADD COLUMN bff integer DEFAULT 0");
         onCreate(db);
 
 
