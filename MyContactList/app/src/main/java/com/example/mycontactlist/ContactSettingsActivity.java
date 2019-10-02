@@ -199,7 +199,7 @@ public class ContactSettingsActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ContactSettingsActivity.this, ContactMapActivity.class);
+                Intent intent = new Intent(ContactSettingsActivity.this, ContactMapActivity2.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
 
