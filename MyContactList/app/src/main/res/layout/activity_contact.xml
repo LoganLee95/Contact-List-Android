@@ -198,6 +198,7 @@
                 android:ems="5"
                 android:imeOptions="actionNext"
                 android:maxLength="5"
+                android:inputType="number"
                 android:nextFocusDown="@+id/editHome" />
 
 

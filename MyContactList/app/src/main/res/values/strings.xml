@@ -18,4 +18,7 @@
     <string name="ascending">Ascending</string>
     <string name="descending">Descending</string>
     <string name="title_activity_contact_map2">Map</string>
+    <string name="permission_rationale_location">111</string>
+    <string name="permission_required_toast">222</string>
+    <string name="location_permission_denied">333</string>
 </resources>
