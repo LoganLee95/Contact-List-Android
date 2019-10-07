@@ -26,7 +26,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.material.snackbar.Snackbar;
 
-public class OldContactMapActivity extends AppCompatActivity implements OnMapReadyCallback,
+public class ContactMapActivity extends AppCompatActivity implements OnMapReadyCallback,
         GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks, com.google.android.gms.location.LocationListener {
 
     final int PERMISSION_REQUEST_LOCATION = 101;
