@@ -3,13 +3,16 @@ package com.example.mycontactlist;
 import android.content.ContentValues;
 import android.content.Context;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
 
 public class ContactDataSource {
@@ -49,6 +52,13 @@ public class ContactDataSource {
             initialValues.put("birthday", String.valueOf(contact.getBirthday().getTimeInMillis()));
             initialValues.put("bff", contact.isBestFriend());
 
+            if (contact.getPicture() != null){
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                contact.getPicture().compress(Bitmap.CompressFormat.PNG,100,baos);
+                byte[]photo = baos.toByteArray();
+                initialValues.put("contactphoto", photo);
+            }
+
             didSucceed = database.insert("contact", null, initialValues) > 0;
 
         } catch (Exception ex) {
@@ -76,6 +86,14 @@ public class ContactDataSource {
             updateValues.put("email", contact.getEMail());
             updateValues.put("birthday", String.valueOf(contact.getBirthday().getTimeInMillis()));
             updateValues.put("bff", contact.isBestFriend());
+
+            if (contact.getPicture() != null){
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                contact.getPicture().compress(Bitmap.CompressFormat.PNG,100,baos);
+                byte[]photo = baos.toByteArray();
+                updateValues.put("contactphoto", photo);
+            }
+
 
             didSucceed = database.update("contact", updateValues, "_id=" + rowId, null) > 0;
 
@@ -216,6 +234,12 @@ public class ContactDataSource {
             calendar.setTimeInMillis(Long.valueOf(cursor.getString(9)));
             if(cursor.getInt(10) > 0){
                 contact.setAsBestFriend(1);
+            }
+            byte[]photo = cursor.getBlob(11);
+            if(photo != null){
+                ByteArrayInputStream imageStream = new ByteArrayInputStream(photo);
+                Bitmap tempPicture = BitmapFactory.decodeStream(imageStream);
+                contact.setPicture(tempPicture);
             }
 
             contact.setBirthday(calendar);

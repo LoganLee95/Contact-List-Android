@@ -1,5 +1,6 @@
 package com.example.mycontactlist;
 
+import androidx.annotation.CallSuper;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -13,9 +14,12 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.text.Editable;
 import android.text.InputType;
@@ -36,11 +40,20 @@ import android.widget.ToggleButton;
 import android.text.format.DateFormat;
 import java.util.Calendar;
 
+/*
+2. Modify the app so that when the user long-clicks
+the cell number of a contact, the text messaging service
+is opened instead of the phone service. You will have to
+have a permission in the manifest to send text (SMS) messages.
+ */
+
 public class ContactActivity extends AppCompatActivity implements SaveDateListener {
 
+    final int CAMERA_REQUEST = 1888;
     private Contact currentContact;
     final static int OLD_BUILD_VERSION = 23;
     final static int PERMISSION_REQUEST_PHONE = 102;
+    final int PERMISSION_REQUEST_CAMERA = 103;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +74,7 @@ public class ContactActivity extends AppCompatActivity implements SaveDateListen
 
             currentContact = new Contact();
         }
-
+        initImageButton();
         initBestFriendSwitch();
         setForEditing(false);
         initChangeDateButton();
@@ -85,9 +98,40 @@ public class ContactActivity extends AppCompatActivity implements SaveDateListen
                     Toast.makeText(ContactActivity.this,"You will not be able to make calls" +
                             "from this app.", Toast.LENGTH_LONG).show();
                 }
+
+
+
             }
+            case PERMISSION_REQUEST_CAMERA: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    takePhoto();
+                } else {
+                    Toast.makeText(ContactActivity.this, "You will not be able to save " +
+                            "contact pictures from this app.", Toast.LENGTH_LONG).show();
+                }
+            }
+
         }
 
+    }
+    public void takePhoto() {
+        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(cameraIntent,CAMERA_REQUEST);
+    }
+
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == CAMERA_REQUEST) {
+            if (resultCode == RESULT_OK) {
+                Bitmap photo = (Bitmap) data.getExtras().get("data");
+                Bitmap scaledPhoto = Bitmap.createScaledBitmap(photo, 144, 144, true);
+                ImageButton imageContact = (ImageButton) findViewById(R.id.imageContact);
+                imageContact.setImageBitmap(scaledPhoto);
+                currentContact.setPicture(scaledPhoto);
+            }
+        }
     }
 
     private void callContact(String phoneNumber){
@@ -167,6 +211,45 @@ public class ContactActivity extends AppCompatActivity implements SaveDateListen
         });
     }
 
+    private void initImageButton() {
+        ImageButton ib = (ImageButton)findViewById(R.id.imageContact);
+        ib.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v) {
+                if(Build.VERSION.SDK_INT >= OLD_BUILD_VERSION) {
+                    if(ContextCompat.checkSelfPermission(ContactActivity.this,
+                            Manifest.permission.CAMERA) !=
+                    PackageManager.PERMISSION_GRANTED) {
+                        if(ActivityCompat.shouldShowRequestPermissionRationale
+                                (ContactActivity.this, Manifest.permission.CAMERA)) {
+                            Snackbar.make(findViewById(R.id.activity_contact),
+                                    "The app needs permission to take pictures.",
+                                    Snackbar.LENGTH_INDEFINITE)
+                            .setAction("Ok",new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    ActivityCompat.requestPermissions(ContactActivity.this,
+                                            new String[]{Manifest.permission.CAMERA},
+                                            PERMISSION_REQUEST_CAMERA);
+                                }
+                            }).show();
+
+                        }else{
+                            ActivityCompat.requestPermissions(ContactActivity.this,
+                                    new String[]{Manifest.permission.CAMERA},
+                                    PERMISSION_REQUEST_CAMERA);
+                        }
+                            }
+                            else {
+                                takePhoto();
+                            }
+                        }
+                        else {
+                            takePhoto();
+                }
+            }
+        });
+    }
+
     private void setForEditing(boolean enabled) {
         EditText editName = (EditText) findViewById(R.id.editName);
         EditText editAddress = (EditText) findViewById(R.id.editAddress);
@@ -179,6 +262,10 @@ public class ContactActivity extends AppCompatActivity implements SaveDateListen
         Button buttonChange = (Button) findViewById(R.id.btnBirthday);
         Button buttonSave = (Button) findViewById(R.id.buttonSave);
         Switch friendSwitch = findViewById (R.id.friendSwitch);
+        ImageButton picture = (ImageButton) findViewById(R.id.imageContact);
+        picture.setEnabled(enabled);
+
+
 
         editName.setEnabled(enabled);
         editAddress.setEnabled(enabled);
@@ -436,6 +523,14 @@ public class ContactActivity extends AppCompatActivity implements SaveDateListen
 
         //If the loaded contact is a a bff switch is set to on
         friendSwitch.setChecked(currentContact.isBestFriend() == 1);
+
+        ImageButton picture = (ImageButton)findViewById(R.id.imageContact);
+        if(currentContact.getPicture() != null) {
+            picture.setImageBitmap(currentContact.getPicture());
+        }
+        else {
+            picture.setImageResource(R.drawable.photoicon);
+        }
     }
     private void initSaveButton(){
         Button saveButton = (Button)findViewById(R.id.buttonSave);
