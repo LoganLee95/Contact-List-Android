@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context="com.example.mycontactlist.utils.Gps_Network_Utility_Tester">
 
-    <RelativeLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/navbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -18,120 +18,56 @@
             android:id="@+id/imageButtonList"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_marginEnd="20dp"
             android:layout_marginRight="20dp"
-            android:layout_toLeftOf="@+id/imageButtonMap"
-            android:layout_toStartOf="@+id/imageButtonMap"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/imageButtonMap"
+            app:layout_constraintRight_toLeftOf="@+id/imageButtonMap"
+            app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/contactlisticon" />
 
         <ImageButton
             android:id="@+id/imageButtonMap"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/mapicon" />
 
         <ImageButton
             android:id="@+id/imageButtonSettings"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
             android:layout_marginStart="20dp"
-            android:layout_toEndOf="@+id/imageButtonMap"
-            android:layout_toRightOf="@+id/imageButtonMap"
+            android:layout_marginLeft="20dp"
+            app:layout_constraintLeft_toRightOf="@+id/imageButtonMap"
+            app:layout_constraintStart_toEndOf="@+id/imageButtonMap"
+            app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/settingicon" />
 
-    </RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
-        android:id="@+id/textAddress"
+        android:id="@+id/gpslocation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="@dimen/text_size_large"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="10dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="5dp"
-        android:text="Address:" />
-
-    <EditText
-        android:id="@+id/editAddress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/textAddress"
-        android:layout_marginLeft="10dp"
-        android:layout_marginStart="10dp"
-        android:ems="15"
-        android:imeOptions="actionNext"
-        android:inputType="textCapWords"/>
-
-    <EditText
-        android:id="@+id/editCity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/editAddress"
-        android:layout_marginLeft="10dp"
-        android:layout_marginStart="10dp"
-        android:ems="8"
-        android:imeOptions="actionNext"
-        android:inputType="textCapWords"
-        android:nextFocusDown="@+id/editState"/>
-
-    <EditText
-        android:id="@+id/editState"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/editCity"
-        android:layout_toEndOf="@+id/editCity"
-        android:layout_toRightOf="@+id/editCity"
-        android:ems="2"
-        android:imeOptions="actionNext"
-        android:inputType="textCapCharacters"
-        android:maxLength="2"
-        android:nextFocusDown="@+id/editZipcode"/>
-
-    <EditText
-        android:id="@+id/editZipcode"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/editState"
-        android:layout_toEndOf="@+id/editState"
-        android:layout_toRightOf="@+id/editState"
-        android:ems="5"
-        android:imeOptions="actionNext"
-        android:inputType="numberSigned"
-        android:maxLength="5"
-        android:nextFocusDown="@+id/editHome"/>
-
-    <Button
-        android:id="@+id/buttonGetLocation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/editCity"
-        android:layout_marginLeft="20dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="30dp"
-        android:text="Get GPS Location " />
-
+        android:text="GPS Location " />
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/buttonGetLocation"
+        android:layout_below="@+id/gpslocation"
         android:layout_marginLeft="20dp"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="5dp"
         android:text="Latitude:" />
 
     <TextView
@@ -190,6 +126,178 @@
         android:layout_toEndOf="@+id/textView5"
         android:layout_toRightOf="@+id/textView5"
         android:text="None" />
+
+
+
+
+
+
+
+    <TextView
+        android:id="@+id/networklocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView5"
+        android:layout_marginTop="10dp"
+        android:textSize="@dimen/text_size_large"
+        android:text="Network Location " />
+
+    <TextView
+        android:id="@+id/textViewlatNetwork"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/networklocation"
+        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="5dp"
+        android:text="Latitude:" />
+
+    <TextView
+        android:id="@+id/textLatitudeNetwork"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/textViewlatNetwork"
+        android:layout_marginLeft="30dp"
+        android:layout_marginStart="30dp"
+        android:layout_toEndOf="@+id/textViewlatNetwork"
+        android:layout_toRightOf="@+id/textViewlatNetwork"
+        android:text="None" />
+
+    <TextView
+        android:id="@+id/textView4Network"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textViewlatNetwork"
+        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="15dp"
+        android:text="Longitude:" />
+
+    <TextView
+        android:id="@+id/textLongitudeNetwork"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textLatitudeNetwork"
+        android:layout_alignStart="@+id/textLatitudeNetwork"
+        android:layout_alignTop="@+id/textView4Network"
+        android:layout_toEndOf="@+id/textView4Network"
+        android:layout_toRightOf="@+id/textView4Network"
+        android:text="None" />
+
+    <TextView
+        android:id="@+id/textView5Network"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textView4Network"
+        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="15dp"
+        android:text="Accuracy:" />
+
+    <TextView
+        android:id="@+id/textAccuracyNetwork"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textLatitudeNetwork"
+        android:layout_alignStart="@+id/textLatitudeNetwork"
+        android:layout_alignTop="@+id/textView5Network"
+        android:layout_toEndOf="@+id/textView5Network"
+        android:layout_toRightOf="@+id/textView5Network"
+        android:text="None" />
+
+
+
+
+
+
+
+
+    <TextView
+        android:id="@+id/bestlocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/textAccuracyNetwork"
+        android:textSize="@dimen/text_size_large"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:text="Best Location " />
+
+    <TextView
+        android:id="@+id/textViewlatbest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/bestlocation"
+        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="5dp"
+        android:text="Latitude:" />
+
+    <TextView
+        android:id="@+id/textLatitudebest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/textViewlatbest"
+        android:layout_marginLeft="30dp"
+        android:layout_marginStart="30dp"
+        android:layout_toEndOf="@+id/textViewlatbest"
+        android:layout_toRightOf="@+id/textViewlatbest"
+        android:text="None" />
+
+    <TextView
+        android:id="@+id/textView4best"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textViewlatbest"
+        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="15dp"
+        android:text="Longitude:" />
+
+    <TextView
+        android:id="@+id/textLongitudebest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textLatitudebest"
+        android:layout_alignStart="@+id/textLatitudebest"
+        android:layout_alignTop="@+id/textView4best"
+        android:layout_toEndOf="@+id/textView4best"
+        android:layout_toRightOf="@+id/textView4best"
+        android:text="None" />
+
+    <TextView
+        android:id="@+id/textViewbest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textView4best"
+        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="15dp"
+        android:text="Accuracy:" />
+
+    <TextView
+        android:id="@+id/textAccuracybest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textLatitudebest"
+        android:layout_alignStart="@+id/textLatitudebest"
+        android:layout_alignTop="@+id/textViewbest"
+        android:layout_toEndOf="@+id/textViewbest"
+        android:layout_toRightOf="@+id/textViewbest"
+        android:text="None" />
+
 
 
 

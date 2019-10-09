@@ -7,17 +7,17 @@
     android:layout_height="match_parent"
     tools:context=".ContactActivity">
 
+
     <LinearLayout
-        android:focusable="true"
         android:layout_width="0px"
         android:layout_height="0px"
-        android:focusableInTouchMode="true"/>
+        android:focusable="true"
+        android:focusableInTouchMode="true" />
 
-
-    <RelativeLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/navbar"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="@color/navbar_background"
         android:clickable="false"
@@ -28,19 +28,24 @@
             android:id="@+id/imageButtonList"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_marginEnd="20dp"
             android:layout_marginRight="20dp"
-            android:layout_toStartOf="@+id/imageButtonMap"
-            android:layout_toLeftOf="@+id/imageButtonMap"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/imageButtonMap"
+            app:layout_constraintRight_toLeftOf="@+id/imageButtonMap"
+            app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/contactlisticon" />
 
         <ImageButton
             android:id="@+id/imageButtonMap"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="false"
-            android:layout_centerInParent="true"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/mapicon" />
 
 
@@ -48,16 +53,16 @@
             android:id="@+id/imageButtonSettings"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             android:layout_marginStart="17dp"
             android:layout_marginLeft="17dp"
             android:layout_marginBottom="4dp"
-            android:layout_toEndOf="@+id/imageButtonMap"
-            android:layout_toRightOf="@+id/imageButtonMap"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/imageButtonMap"
+            app:layout_constraintStart_toEndOf="@+id/imageButtonMap"
             app:srcCompat="@drawable/settingicon" />
-    </RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <RelativeLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -70,25 +75,26 @@
             android:id="@+id/toggleButtonEdit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
             android:layout_marginStart="20dp"
             android:layout_marginLeft="20dp"
-            />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/buttonSave"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
             android:layout_marginEnd="20dp"
             android:layout_marginRight="20dp"
-            android:text="@string/saveButtonText" />
+            android:text="@string/saveButtonText"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    </RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     <ScrollView
@@ -331,6 +337,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="15dp"
+                android:layout_marginBottom="10dp"
                 android:text="Best Friend"
                 android:textColor="@color/design_default_color_primary_dark"/>
 

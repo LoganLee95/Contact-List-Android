@@ -14,6 +14,8 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.Looper;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -29,6 +31,11 @@ import androidx.core.content.ContextCompat;
 
 import com.example.mycontactlist.utils.Gps_Network_Utility_Tester;
 import com.example.mycontactlist.utils.PermissionUtils;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnMyLocationButtonClickListener;
@@ -38,6 +45,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -50,7 +58,6 @@ public class ContactMapActivity2 extends AppCompatActivity
         OnMyLocationButtonClickListener,
         OnMyLocationClickListener,
         ActivityCompat.OnRequestPermissionsResultCallback {
-
 
     /**
      * Request code for location permission request.
@@ -65,6 +72,10 @@ public class ContactMapActivity2 extends AppCompatActivity
      */
     private boolean mPermissionDenied = false;
 
+    private FusedLocationProviderClient fusedLocationClient;
+    private LocationRequest locationRequest;
+    private LocationCallback locationCallback;
+
 
     private GoogleMap mMap;
 
@@ -75,12 +86,14 @@ public class ContactMapActivity2 extends AppCompatActivity
     Sensor accelerometer;
     Sensor magnetometer;
     TextView textDirection;
+    Location mCurrentLocation;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_map2);
+
 
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
@@ -115,9 +128,11 @@ public class ContactMapActivity2 extends AppCompatActivity
         }
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-
         assert mapFragment != null;
         mapFragment.getMapAsync(ContactMapActivity2.this);
+
+        getLastCurrentLocation();
+        createLocationRequest();
 
         initListButton();
         initMapButton();
@@ -125,7 +140,74 @@ public class ContactMapActivity2 extends AppCompatActivity
         initMapTypeButton();
         initGpsTesterbutton();
 
+        locationCallback = new LocationCallback() {
+            @Override
+            public void onLocationResult(LocationResult locationResult) {
+                if (locationResult == null) {
+                    return;
+                }
+                for (Location location : locationResult.getLocations()) {
+                    Toast.makeText(getBaseContext(),"Current location: " + "Lat: " + location.getLatitude() +
+                                    "\nLong: " + location.getLongitude() +
+                                    "\nAccuracy: " + location.getAccuracy(),
+                            Toast.LENGTH_LONG).show();
+                }
+            }
+        };
+
     }
+
+    private void getLastCurrentLocation(){
+
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        fusedLocationClient.getLastLocation()
+                .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                    @Override
+                    public void onSuccess(Location location) {
+
+                        Log.e("OnSuccess","Something went wrong, location came back null");
+
+                            if (location != null) {
+                                mCurrentLocation = location;
+
+
+                        }
+                    }
+                });
+
+    }
+
+
+    protected void createLocationRequest() {
+        locationRequest = LocationRequest.create();
+        locationRequest.setInterval(25000);
+        locationRequest.setFastestInterval(10000);
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        enableMyLocation();
+        startLocationUpdates();
+
+    }
+
+    private void startLocationUpdates() {
+        fusedLocationClient.requestLocationUpdates(locationRequest,
+                locationCallback,
+                Looper.getMainLooper());
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        stopLocationUpdates();
+}
+
+    private void stopLocationUpdates() {
+        fusedLocationClient.removeLocationUpdates(locationCallback);
+    }
+
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -137,8 +219,6 @@ public class ContactMapActivity2 extends AppCompatActivity
         mMap.setOnMyLocationClickListener(this);
 
         enableMyLocation();
-
-
 
         Point size = new Point();
         WindowManager w = getWindowManager();
@@ -165,6 +245,11 @@ public class ContactMapActivity2 extends AppCompatActivity
 
 
                 } catch (IOException e) {
+                    Toast.makeText(getBaseContext(), "The connection to the Geocoder may have " +
+                                    "dropped during loading. If your map is missing markers," +
+                                    ", please check your contacts addresses for accuracy" +
+                                    " and reopen the map.",
+                            Toast.LENGTH_LONG).show();
                     e.printStackTrace();
 
                 }
@@ -185,8 +270,10 @@ public class ContactMapActivity2 extends AppCompatActivity
                             title(currentContact.getContactName()).snippet(address));
 
                 } catch (NullPointerException e) {
-                    Toast.makeText(getBaseContext(), "The connection to the Geocoder dropped during loading" +
-                                    ", please reload the map",
+                    Toast.makeText(getBaseContext(), "The connection to the Geocoder may have " +
+                                    "dropped during loading. If your map is missing markers," +
+                                    ", please check your contacts addresses for accuracy" +
+                                    " and reopen the map.",
                             Toast.LENGTH_LONG).show();
 
                 }
@@ -214,6 +301,10 @@ public class ContactMapActivity2 extends AppCompatActivity
 
                 } catch (IOException e) {
                     e.printStackTrace();
+                    Toast.makeText(getBaseContext(), "The connection to the Geocoder may have dropped." +
+                                    " If your map is missing a marker, please confirm the contacts address " +
+                                    "and then reopen the map.",
+                            Toast.LENGTH_LONG).show();
                 }
 
                 try {
@@ -234,8 +325,9 @@ public class ContactMapActivity2 extends AppCompatActivity
                         throw new NullPointerException("Geocoder producing Null objects");
                     }
                 } catch (NullPointerException e) {
-                    Toast.makeText(getBaseContext(), " The connectino to the Geocoder was dropped" +
-                                    ", please reload the map.",
+                    Toast.makeText(getBaseContext(), "The connection to the Geocoder may have dropped." +
+                                    " If your map is missing markers, please confirm the contacts address " +
+                                    "and then reopen the map.",
                             Toast.LENGTH_LONG).show();
 
                 }
@@ -315,12 +407,14 @@ public class ContactMapActivity2 extends AppCompatActivity
         } else if (mMap != null) {
             // Access to the location has been granted to the app.
             mMap.setMyLocationEnabled(true);
+            startLocationUpdates();
         }
     }
 
     @Override
     public boolean onMyLocationButtonClick() {
-        Toast.makeText(this, "Updating GMS Location .....", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Updating GMS Location .....\n Hint: click on the blue dot" +
+                "to see current latitude and longitude.", Toast.LENGTH_LONG).show();
         // Return false so that we don't consume the event and the default behavior still occurs
         // (the camera animates to the user's current position).
         return false;
@@ -429,6 +523,7 @@ public class ContactMapActivity2 extends AppCompatActivity
 
     }
     private void initGpsTesterbutton() {
+
         final Button gpsTesterButton = findViewById(R.id.buttonLocationTester);
         gpsTesterButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
@@ -437,5 +532,6 @@ public class ContactMapActivity2 extends AppCompatActivity
                 startActivity(intent);
             }
         });
+        gpsTesterButton.setVisibility(View.INVISIBLE);
     }
 }

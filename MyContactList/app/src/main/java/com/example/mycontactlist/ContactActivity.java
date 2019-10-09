@@ -1,29 +1,19 @@
 package com.example.mycontactlist;
 
-import androidx.annotation.CallSuper;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.FragmentManager;
-
-import com.example.mycontactlist.DatePickerDialog.*;
-import com.google.android.material.snackbar.Snackbar;
-
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -36,12 +26,22 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentManager;
 
-import android.text.format.DateFormat;
+import com.example.mycontactlist.DatePickerDialog.SaveDateListener;
+import com.google.android.material.snackbar.Snackbar;
+
 import java.util.Calendar;
 
 /*
-2. Modify the app so that when the user long-clicks
+Chapter 8
+
+Exercise 2:
+Modify the app so that when the user long-clicks
 the cell number of a contact, the text messaging service
 is opened instead of the phone service. You will have to
 have a permission in the manifest to send text (SMS) messages.
@@ -54,6 +54,8 @@ public class ContactActivity extends AppCompatActivity implements SaveDateListen
     final static int OLD_BUILD_VERSION = 23;
     final static int PERMISSION_REQUEST_PHONE = 102;
     final int PERMISSION_REQUEST_CAMERA = 103;
+    final static int PERMISSION_REQUEST_SMS = 104;
+    final static String TAG = "SMS Issue Logged";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +66,7 @@ public class ContactActivity extends AppCompatActivity implements SaveDateListen
         initSettingsButton();
         initToggleButton();
         initCallFunction();
+        initSMSFunction();
 
 
         Bundle extras = getIntent().getExtras();
@@ -89,7 +92,7 @@ public class ContactActivity extends AppCompatActivity implements SaveDateListen
                                           @NonNull String[] permissions, @NonNull int[] grantResults) {
 
         switch(requestCode) {
-            case PERMISSION_REQUEST_PHONE: {
+            case PERMISSION_REQUEST_PHONE:
                 if(grantResults.length > 0 && grantResults[0] ==
                 PackageManager.PERMISSION_GRANTED) {
                     Toast.makeText(ContactActivity.this, "You may now call from this app.",
@@ -98,18 +101,28 @@ public class ContactActivity extends AppCompatActivity implements SaveDateListen
                     Toast.makeText(ContactActivity.this,"You will not be able to make calls" +
                             "from this app.", Toast.LENGTH_LONG).show();
                 }
+                          break;
 
-
-
-            }
-            case PERMISSION_REQUEST_CAMERA: {
+            case PERMISSION_REQUEST_CAMERA:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     takePhoto();
                 } else {
                     Toast.makeText(ContactActivity.this, "You will not be able to save " +
                             "contact pictures from this app.", Toast.LENGTH_LONG).show();
                 }
-            }
+                           break;
+
+            case PERMISSION_REQUEST_SMS:
+                if(grantResults.length > 0 && grantResults[0] ==
+                PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(ContactActivity.this, "You may now send SMS messages from this app. ",
+                            Toast.LENGTH_LONG).show();
+
+                }else {
+                    Toast.makeText(ContactActivity.this,"You will not be able to send SMS messages" +
+                            "from this app.", Toast.LENGTH_LONG).show();
+                }
+                                break;
 
         }
 
@@ -131,6 +144,19 @@ public class ContactActivity extends AppCompatActivity implements SaveDateListen
                 imageContact.setImageBitmap(scaledPhoto);
                 currentContact.setPicture(scaledPhoto);
             }
+        }
+    }
+    private void sendSMS(String cellNumber){
+        Intent smsIntent = new Intent(Intent.ACTION_SENDTO);
+        // Set the data for the intent as the phone number.
+        smsIntent.setData(Uri.parse("smsto:" + cellNumber));
+        // Add the message (sms) with the key ("sms_body").
+        smsIntent.putExtra("sms_body", "Write content of text here");
+        // If package resolves (target app installed), send intent.
+        if (smsIntent.resolveActivity(getPackageManager()) != null) {
+            startActivity(smsIntent);
+        } else {
+            Log.d(TAG, "Can't resolve app for ACTION_SENDTO Intent");
         }
     }
 
@@ -264,8 +290,6 @@ public class ContactActivity extends AppCompatActivity implements SaveDateListen
         Switch friendSwitch = findViewById (R.id.friendSwitch);
         ImageButton picture = (ImageButton) findViewById(R.id.imageContact);
         picture.setEnabled(enabled);
-
-
 
         editName.setEnabled(enabled);
         editAddress.setEnabled(enabled);
@@ -588,6 +612,18 @@ public class ContactActivity extends AppCompatActivity implements SaveDateListen
         EditText editEMail = (EditText) findViewById(R.id.editEMail);
         imm.hideSoftInputFromWindow(editEMail.getWindowToken(), 0);
     }
+    private void initSMSFunction(){
+        EditText editcell = (EditText)findViewById(R.id.editCell);
+        editcell.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                checkSMSPermission(currentContact.getCellNumber());
+                return false;
+            }
+        });
+
+    }
+
     private void initCallFunction(){
         EditText editPhone = (EditText)findViewById(R.id.editHome);
         editPhone.setOnLongClickListener(new View.OnLongClickListener() {
@@ -598,14 +634,40 @@ public class ContactActivity extends AppCompatActivity implements SaveDateListen
             }
         });
 
-        EditText editCell = findViewById(R.id.editCell);
-        editCell.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                checkPhonePermission(currentContact.getCellNumber());
-                return false;
+    }
+
+    private void checkSMSPermission(String cellNumber) {
+        if(Build.VERSION.SDK_INT >= OLD_BUILD_VERSION){
+            if(ContextCompat.checkSelfPermission(ContactActivity.this,
+                    Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED){
+
+                if(ActivityCompat.shouldShowRequestPermissionRationale(ContactActivity.this,
+                        Manifest.permission.SEND_SMS)) {
+                    Snackbar.make(findViewById(R.id.activity_contact),
+                            "MyContactList requires this permission to send a text from the app.",
+                            Snackbar.LENGTH_INDEFINITE).setAction("OK", new View.OnClickListener(){
+                        @Override
+                        public void onClick(View view){
+                            ActivityCompat.requestPermissions(
+                                    ContactActivity.this,
+                                    new String[] {
+                                            Manifest.permission.SEND_SMS },
+                                    PERMISSION_REQUEST_SMS);
+                        }
+                    }).show();
+
+                }else {
+                    ActivityCompat.requestPermissions(ContactActivity.this, new
+                                    String[]{Manifest.permission.SEND_SMS},
+                            PERMISSION_REQUEST_SMS);
+
+                }
+            }else {
+                sendSMS(cellNumber);
             }
-        });
+        }else{
+            sendSMS(cellNumber);
+        }
     }
 
 

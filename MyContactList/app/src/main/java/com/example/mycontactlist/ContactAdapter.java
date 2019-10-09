@@ -9,6 +9,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+
 import java.util.ArrayList;
 
 public class ContactAdapter extends ArrayAdapter<Contact> {
@@ -21,8 +24,9 @@ public class ContactAdapter extends ArrayAdapter<Contact> {
         adapterContext = context;
         this.items = items;
     }
+    @NonNull
     @Override
-    public View getView(int position,View convertView, ViewGroup parent){
+    public View getView(int position,View convertView,@NonNull ViewGroup parent){
         View v = convertView;
 
         try {

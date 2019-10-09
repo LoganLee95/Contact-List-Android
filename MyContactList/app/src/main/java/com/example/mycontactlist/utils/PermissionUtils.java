@@ -85,9 +85,9 @@ public abstract class PermissionUtils {
                     .setPositiveButton(android.R.string.ok, null)
                     .create();
         }
-        @NonNull
+
         @Override
-        public void onDismiss(DialogInterface dialog) {
+        public void onDismiss(@NonNull DialogInterface dialog) {
             super.onDismiss(dialog);
             if (mFinishActivity) {
                 Toast.makeText(getActivity(), R.string.permission_required_toast,

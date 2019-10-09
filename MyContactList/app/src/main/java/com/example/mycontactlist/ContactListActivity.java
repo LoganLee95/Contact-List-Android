@@ -1,7 +1,5 @@
 package com.example.mycontactlist;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -16,40 +14,26 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 
-/*
-1. Add the contact’s cell phone number to the complex list.
- The list should display the contact name on the first line
- and Home: the number Cell:the number on the second line.
-
-2. Find a small star shaped graphic and add it to the
-layout if the contact is a “Best Friend Forever.”
-
-3. Add another line to the list so that the list displays:
-Contact Name
-Street Address
-City, State, Zip,
-Phone number
-
-4. Modify the custom adapter to alternately display the contact name in red and blue.
- For example, the first name in the list will be red, the second will be blue, the third is red, and so on.
- */
 
 public class ContactListActivity extends AppCompatActivity {
 
     boolean isDeleting = false;
     ContactAdapter adapter;
     ArrayList<Contact> contacts;
+    BroadcastReceiver batteryReceiver;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_list);
 
-        BroadcastReceiver batteryReceiver = new BroadcastReceiver() {
+         batteryReceiver = new BroadcastReceiver() {
+
             @Override
             public void onReceive(Context context, Intent intent) {
                 double batteryLevel = intent.getIntExtra(BatteryManager.EXTRA_LEVEL,0);
@@ -59,6 +43,7 @@ public class ContactListActivity extends AppCompatActivity {
 
                 String tempStr = batteryPercent + "%";
                 textBatteryState.setText(tempStr);
+
 
             }
         };
@@ -73,6 +58,17 @@ public class ContactListActivity extends AppCompatActivity {
         initItemClick();
         initAddContactButton();
         initDeleteButton();
+    }
+    @Override
+    public void onDestroy() {
+
+        try{
+            if(batteryReceiver !=null)
+                unregisterReceiver(batteryReceiver);
+
+        }catch(Exception e){ System.out.println("Receiver is still registered, something went wrong in onDestoy()");}
+
+        super.onDestroy();
     }
 
     @Override
@@ -194,6 +190,7 @@ public class ContactListActivity extends AppCompatActivity {
             }
         });
     }
+
 
 
 }

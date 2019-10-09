@@ -34,14 +34,18 @@ import com.google.android.gms.maps.SupportMapFragment;
 
 
 
-/*  Exercises from chapter 7:
-1. Create a layout that displays the latitude, longitude, and accuracy for the network sensor and for the GPS sensor.
- Add a listener for each and have it display its reported location in the appropriate onscreen widget. Run it on a
- device. Walk around with the app open to this screen and observe the differences.
+/*
+Exercises
+        1. Create a layout that displays the latitude, longitude, and accuracy for the network sensor
+         and for the GPS sensor. Add a listener for each and have it display its reported location in
+          the appropriate onscreen widget. Run it on a device. Walk around with the app open to this
+          screen and observe the differences.
 
- 2. Modify the layout in Exercise 1 to have a third set of latitude, longitude, and accuracy labeled
- best location. Code a method to test for the best location and put the values in these widgets.
- Run the app and again observe the results.
+        2. Modify the layout in Exercise 1 to have a third set of latitude,
+        longitude, and accuracy labeled best location. Code a method to test
+        for the best location and put the values in these widgets.
+         Run the app and again observe the results.
+
  */
 
 public class Gps_Network_Utility_Tester extends AppCompatActivity implements
@@ -71,7 +75,7 @@ public class Gps_Network_Utility_Tester extends AppCompatActivity implements
         initListButton();
         initMapButton();
         initSettingsButton();
-        initGetLocationButton();
+//        initGetLocationButton();
 
 
         createLocationRequest();
@@ -121,9 +125,9 @@ public class Gps_Network_Utility_Tester extends AppCompatActivity implements
 
         }
     }
-
+/*
     private void initGetLocationButton() {
-        Button locationButton = (Button) findViewById(R.id.buttonGetLocation);
+        Button locationButton = (Button) findViewById(R.id.);
         locationButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -186,6 +190,8 @@ public class Gps_Network_Utility_Tester extends AppCompatActivity implements
             }
         });
     }
+
+ */
 
 
     private void initListButton() {

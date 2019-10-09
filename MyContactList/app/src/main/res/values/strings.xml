@@ -18,9 +18,9 @@
     <string name="ascending">Ascending</string>
     <string name="descending">Descending</string>
     <string name="title_activity_contact_map2">Map</string>
-    <string name="permission_rationale_location">111</string>
-    <string name="permission_required_toast">222</string>
-    <string name="location_permission_denied">333</string>
-    <string name="gps_tester">GPS Tester</string>
+    <string name="permission_rationale_location">This application requires access to your location data to perform this task.</string>
+    <string name="permission_required_toast">Permission is required in order for this application to use your location</string>
+    <string name="location_permission_denied">This app does not have permission to access location data</string>
+    <string name="gps_tester">Test</string>
     <string name="satellite_view">Satellite View</string>
 </resources>
