@@ -1,7 +1,8 @@
 # Contact List App for Android --
-Built by Harry Dulaney following the workshop build in "Mobile App Development for IOS and Andriod"
-
-This the Android workshop project from: Mobile App Development for IOS and Android by Jakob Iversen &amp; Michael Eierman
+Built by Harry Dulaney
+This is a contact list application which:
+# Implements Google Maps SDK
+# Uses location , camera, SMS, and Phone Features + Permissions
 
 This application build covers the main concepts critical to Andriod development.
 Including: 
