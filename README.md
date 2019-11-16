@@ -1,11 +1,9 @@
 
 
 
-**
+
 
 # -- Contact List for Android--
-
-**
 
 **This is a contact list application which implements:**
 
