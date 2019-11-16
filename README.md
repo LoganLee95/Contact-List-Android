@@ -1,7 +1,6 @@
 
 
 
-> Written with [StackEdit](https://stackedit.io/).
 **
 
 # -- Contact List for Android--
@@ -10,7 +9,7 @@
 
 **This is a contact list application which implements:**
 
- -   Google Maps SDK
+ -  Google Maps SDK
  -  Geolocation and geocoding
  -  Hardware access including: Camera, SMS, and Phone  
  -  Phone Permissions
