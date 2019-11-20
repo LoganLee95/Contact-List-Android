@@ -14,7 +14,7 @@ _[For the iOS Version Click Here ](https://github.com/HarryDulaney/Contact-List-
  -  Phone Permissions
  
 **This application build covers these main concepts critical to Android development.**
- - Android lifecycle
+ - Application Lifecycle in Android SDK
  - XML View Layouts
  - Data persistance in mobile applications
  - SQLite design and implementation
